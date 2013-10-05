@@ -1,3 +1,4 @@
-.swp
-.swo
-.png
+*.swp
+*.swo
+*.png
+junk/
