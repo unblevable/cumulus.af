@@ -1,0 +1,11 @@
+{
+    "name": "cumulus-app",
+    "version": "0.0.1",
+    "description": "cumulus.af",
+    "dependencies": {
+        "mongoose": "latest",
+        "underscore": "latest",
+        "express": "latest",
+        "path": "~0.4.9"
+    }
+}
