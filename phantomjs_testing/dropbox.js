@@ -1,22 +1,32 @@
-var page = new WebPage(),
+var maildropPage = new WebPage(),
+    dropboxPage = new WebPage(),
     system = require('system'),
-    address;
+    dropboxAddress = "http://dropbox.com",
+    maildropAddress = "http://maildrop.cc",
+    hasChangedUrl = 0,
+    EMAIL,
+    PASSWORD = 'dummy_password';
 
-var has_changed_url = 0;
-
-if(system.args.length < 4) {
-    phantom.exit();
-} else {
-    address = system.args[1];
-    var EMAIL = system.args[2];
-    var PASSWORD = system.args[3];
-    page.open(address,function(status) {
-        var email_ad = EMAIL;
+// Query maildrop and pull in new email address
+maildropPage.open(maildropAddress, function(status) {
+    if (status == 'success') {
+        maildropPage.includeJs("http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js", function() {
+            EMAIL = maildropPage.evaluate(function () {
+                return $('#suggestion a').html();
+            });
+            // Output the email address and password we will use
+            console.log(EMAIL + ":" + PASSWORD);
+        });
+    }
+});
+maildropPage.onLoadFinished = function(status) {
+    // Register new account on Dropbox
+    dropboxPage.open(dropboxAddress, function(status) {
         if(status == 'success') {
-            page.evaluate(function(EMAIL, PASSWORD) {
+            dropboxPage.evaluate(function(EMAIL, PASSWORD) {
                 
-                document.getElementById("fname").value = "hello";
-                document.getElementById("lname").value = "hello";
+                document.getElementById("fname").value = "dummy_fname";
+                document.getElementById("lname").value = "dummy_lname";
                 document.getElementById("email").value = EMAIL;
                 document.getElementById("password").value = PASSWORD;
                 document.getElementById("tos_agree").checked = true;
@@ -25,11 +35,11 @@ if(system.args.length < 4) {
             }, EMAIL, PASSWORD);
         }
     });
-    page.onUrlChanged = function(targetUrl) {
-        has_changed_url++;
+    dropboxPage.onUrlChanged = function(targetUrl) {
+        hasChangedUrl++;
     };
-    page.onLoadFinished = function(status) {
-        if (has_changed_url >= 2){ 
+    dropboxPage.onLoadFinished = function(status) {
+        if (hasChangedUrl >= 2){ 
             phantom.exit();
         }
     };

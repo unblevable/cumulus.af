@@ -1,4 +1,5 @@
 cumulus.af
 ==========
 
-HackMIT project with RPI
+Absolutely unlimited cloud storage.
+Automagically infinite space to organize your content.
