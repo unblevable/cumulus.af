@@ -75,10 +75,7 @@ var port = process.env.PORT || 3000;
 
 app.listen(port, function() {
     console.log('Express server listening on port %d in %s mode', port, app.settings.env);
-    var accountCall = function( account ) {
-        console.log(account);
-    }
-    account = dropbox(accountCall);
+    dropbox();
 });
 
 //
