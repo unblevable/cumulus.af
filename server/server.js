@@ -6,6 +6,7 @@ var application_root    = __dirname,
     _                   = require('underscore'),
     passport            = require('passport'),
     LocalStrategy       = require('passport-local').Strategy;
+    generate_dropbox_account = require('generate_dropbox_account.js');
 
 //Create server
 var app = express();
@@ -27,7 +28,7 @@ app.configure(function() {
         dumpExceptions: true,
         showStack:      true
     }));
-    
+
     app.use(express.cookieParser());
     app.use(express.session({ secret: 'SECRET' }));
     app.use(passport.initialize());
@@ -103,16 +104,23 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
+var db_function = function (EMAIL){
+    console.log('asdf');
+}
+
 //Start server
 var port = process.env.PORT || 3000;
 
 app.listen(port, function() {
     console.log('Express server listening on port %d in %s mode', port, app.settings.env);
+    generate_dropbox_account(db_function);
+
 });
+
 
 //
 // GET ROUTES
-// 
+//
 app.get('/dashboard', function(req, res) {
      {
         if(req.isAuthenticated()) {
@@ -152,7 +160,7 @@ app.post('/login',
 
 // FILES
 app.post('api/file', function(req,res) {
-    
+
     var filename = req.body.name;
     console.log(filename);
     // check that the file name does not exist
@@ -165,7 +173,7 @@ app.post('api/file', function(req,res) {
 });
 
 app.get('api/file/:name', function(req,res) {
-   
+
     var filename = req.params.name;
     var username = req.body.username;
     var password = req.body.password; //MD5 hash

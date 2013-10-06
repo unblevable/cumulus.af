@@ -2,3 +2,6 @@
 *.swo
 *.png
 junk/
+.DS_STORE
+*.DS_Store
+*/.DS_Store

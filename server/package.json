@@ -8,5 +8,6 @@
         "express": "latest",
         "path": "~0.4.9",
         "passport": "latest"
+        "phantom": "latest"
     }
 }
