@@ -5,11 +5,11 @@ requirejs.config({
         underscore: 'lib/underscore',
         backbone: 'lib/backbone',
 
-        models: 'models',
-        collections: 'collections',
-        views: 'views',
-        routers: 'routers',
-        templates: 'templates'
+        models: 'models/',
+        collections: 'collections/',
+        views: 'views/',
+        routers: 'routers/',
+        templates: 'templates/'
     },
     shim: {
         underscore: {
@@ -18,26 +18,22 @@ requirejs.config({
 
         backbone: {
             deps: ['underscore', 'jquery'],
-            exports: 'Backbone',
+            exports: 'Backbone'
         }
     },
-    urlArgs: 'bust=' + (new Date().getTime()
+    // urlArgs: 'bust=' + (new Date()).getTime()
 });
 
-requirejs(function (require, exports, module) {
-    var $ = require('jquery'),
-        _ = require('underscore'),
-        Backbone = require('backbone'),
-        FrontPage = require('models/FrontPage'),
-        FrontPageView = require('views/FrontPageView'),
-        AppRouter = require('routers/AppRouter');
+require(['jquery', 'underscore', 'backbone', 'views/FrontPageView', 'routers/AppRouter'], function ($, _,Backbone, FrontPageView, AppRouter) {
 
-        var frontPage = new FrontPage(),
-            frontPageView = new FrontPageView();
+    $(function () {
+        var frontPageView = new FrontPageView();
+
+        $('#container').append(FrontPageView.render().$el);
 
         // Tell Backbone that it's okay to monitor hashtag changes
         if (!Backbone.history.started) {
             Backbone.history.start({ pushState: true });
         }
-
+    });
 });

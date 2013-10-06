@@ -1,24 +1,30 @@
 define(function (require, exports, module) {
-    $ = require('jquery'),
-    _ = require('underscore'),
-    Backbone = require('backbone'),
+    var $ = require('jquery'),
+        _ = require('underscore'),
+        Backbone = require('Backbone');
+    console.log(Backbone);
 
-    FrontPageTemplate = require('text!templates/front_page.html'),
+    var FrontPageTemplate = require('text!templates/front_page_template.html');
 
     var FrontPageView = Backbone.View.extend({
 
-        id: 'front-page',
+        id: 'container',
 
         template: _.template(FrontPageTemplate),
 
         events: {
             'click #signup': function (event) {
+
             },
             'click #login': function (event) {
             }
         },
 
         initialize: function () {
+        },
+
+        render: function () {
+            this.$el.append(this.template);
         }
     });
 
