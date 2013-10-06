@@ -18,7 +18,7 @@ html, body {
   background: #f9fcf7;
   font-family: 'Lato', Helvetica, sans-serif; }
 
-#container {
+#container, #signin-container, #signup-container {
   margin: 0 auto;
   padding-top: 80px;
   width: 960px;
