@@ -2,20 +2,18 @@ define(function (require, exports, module) {
     var $ = require('jquery'),
         _ = require('underscore'),
         Backbone = require('backbone'),
-        AppRouter = require('routers/AppRouter'),
-        SignupTemplate= require('text!templates/signup_template.html');
+        SigninTemplate= require('text!templates/signin_template.html');
 
-    var SignupView = Backbone.View.extend({
+    var SigninView = Backbone.View.extend({
 
-        id: 'signup-container',
+        id: 'signin-container',
 
-        template: _.template(SignupTemplate),
+        template: _.template(SigninTemplate),
 
         events: {
         },
 
         initialize: function () {
-            // var appRouter = new AppRouter();
         },
 
         render: function () {
@@ -25,5 +23,5 @@ define(function (require, exports, module) {
         }
     });
 
-    return SignupView;
+    return SigninView;
 });

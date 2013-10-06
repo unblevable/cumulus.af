@@ -26,6 +26,10 @@ define(function (require, exports, module) {
                 this.router.navigate('/team', { trigger: true });
                 this.$el.hide();
             },
+            'click .icon-sun': function (event) {
+                this.router.navigate('/user', { trigger: true });
+                this.$el.hide();
+            },
         },
 
         initialize: function () {

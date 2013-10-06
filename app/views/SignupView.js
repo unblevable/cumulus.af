@@ -3,13 +3,13 @@ define(function (require, exports, module) {
         _ = require('underscore'),
         Backbone = require('backbone'),
         AppRouter = require('routers/AppRouter'),
-        SigninTemplate= require('text!templates/signin_template.html');
+        SignupTemplate= require('text!templates/signup_template.html');
 
-    var SigninView = Backbone.View.extend({
+    var SignupView = Backbone.View.extend({
 
-        id: 'signin-container',
+        id: 'signup-container',
 
-        template: _.template(SigninTemplate),
+        template: _.template(SignupTemplate),
 
         events: {
         },
@@ -25,5 +25,5 @@ define(function (require, exports, module) {
         }
     });
 
-    return SigninView;
+    return SignupView;
 });
