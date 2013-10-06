@@ -16,11 +16,15 @@ define(function (require, exports, module) {
         events: {
             'click #signin': function (event) {
                 this.router.navigate('/signin', { trigger: true });
-                this.$el.remove();
+                this.$el.hide();
             },
             'click #signup': function (event) {
                 this.router.navigate('/signup', { trigger: true });
-                this.$el.remove();
+                this.$el.hide();
+            },
+            'click #cloud-logo': function (event) {
+                this.router.navigate('/team', { trigger: true });
+                this.$el.hide();
             },
         },
 

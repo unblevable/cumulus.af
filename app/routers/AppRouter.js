@@ -5,6 +5,7 @@ define(function (require, exports, module) {
 
         SigninView = require('views/SigninView'),
         SignupView = require('views/SignupView');
+        TeamPageView = require('views/TeamPageView');
 
     var AppRouter = Backbone.Router.extend({
 
@@ -13,6 +14,7 @@ define(function (require, exports, module) {
             'users/:username': 'showFilesPage',
             'signin': 'signin',
             'signup': 'signup',
+            'team': 'team',
             '*splat': 'defaultRoute'
         },
 
@@ -36,6 +38,11 @@ define(function (require, exports, module) {
         signup: function () {
             var signupView = new SignupView();
             $('body').append(signupView.render().$el);
+        },
+
+        team: function () {
+            var teamPageView = new TeamPageView();
+            $('body').append(teamPageView.render().$el);
         },
 
         defaultRoute: function () {
