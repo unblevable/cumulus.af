@@ -14,6 +14,13 @@ $offWhite: #F9FCF7;
 .cf {
     *zoom: 1;
 }
+.pad-bottom {
+	margin-bottom: 80px;
+}
+
+.justify-align {
+	text-align: justify;
+}
 
 html, body {
 	margin: 0;
@@ -50,6 +57,15 @@ span {
 	.item {
 		display: inline-block;
 		vertical-align: middle;
+		img {
+			border-radius: 150px;
+		}
+	}
+	.item-3 {
+		width: 30%;
+		p {
+			padding: 0 20px 0 20px;
+		}
 	}
 }
 
