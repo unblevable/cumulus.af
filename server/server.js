@@ -3,7 +3,9 @@ var application_root    = __dirname,
     express             = require('express'),
     path                = require('path'),
     mongoose            = require('mongoose'),
-    _                   = require('underscore');
+    _                   = require('underscore'),
+    passport            = require('passport'),
+    LocalStrategy       = require('passport-local').Strategy;
 
 //Create server
 var app = express();
@@ -16,8 +18,6 @@ app.configure(function() {
     //checks request.body for HTTP method overrides
     app.use(express.methodOverride());
 
-    //perform route lookup based on url and HTTP method
-    app.use(app.router);
 
     //Where to serve static content
     app.use(express.static(path.join(application_root, 'site')));
@@ -27,6 +27,15 @@ app.configure(function() {
         dumpExceptions: true,
         showStack:      true
     }));
+    
+    app.use(express.cookieParser());
+    app.use(express.session({ secret: 'SECRET' }));
+    app.use(passport.initialize());
+    app.use(passport.session());
+
+    //perform route lookup based on url and HTTP method
+    app.use(app.router);
+
 });
 
 
@@ -39,12 +48,12 @@ mongoose.connect('mongodb://localhost/cumulusUsers', ['list', 'collections']);
 
 // Schema for a user
 var User = new mongoose.Schema({
-    username: String,
+    email: String,
     password: String,
     createdAt: Number,
     updatedAt: Number,
-    accounts: [Account],
-    files: [File]
+    accounts: [],
+    files: []
 });
 
 // Schema for an Account
@@ -64,10 +73,35 @@ var File = new mongoose.Schema({
 });
 
 // Instantiate models based on schemas
-var Users = mongoose.model('User', User);
+var User = mongoose.model('User', User);
+var Account = mongoose.model('Account', Account);
+var File = mongoose.model('File', File);
 
+// configure passport
+passport.use(new LocalStrategy(
+  function(email, password, done) {
+    User.findOne({ email: email }, function(err, user) {
+      if (err) { return done(err); }
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      if (!user.validPassword(password)) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, user);
+    });
+  }
+));
 
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
 
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function(err, user) {
+    done(err, user);
+  });
+});
 
 //Start server
 var port = process.env.PORT || 3000;
@@ -79,20 +113,43 @@ app.listen(port, function() {
 //
 // GET ROUTES
 // 
-app.get('/api', function(req, res) {
-    response.send('API is running');
+app.get('/dashboard', function(req, res) {
+     {
+        if(req.isAuthenticated()) {
+            res.send('dashboard!!');
+        } else {
+            res.send('not authoried');
+        }
+    }
 });
 
 // USERS
-app.post('api/user/create', function(req,res) {
-    var username = req.body.username;
-    var password = req.body.password;
-
-    // check that username is available
-        // if not throw error
-        // otherwise make account and login
-
+app.post('/register', function(req, res) {
+    // attach POST to user schema
+    var user = new User({ email: req.body.email, password: req.body.password });
+    // save in Mongo
+    user.save(function(err,user) {
+        if(err) {
+            console.log(err);
+        } else {
+            console.log('user: ' + user.email + " saved.");
+            req.login(user, function(err) {
+                if (!err) {
+                    return res.redirect('/dashboard');
+                } else {
+                    console.log(err);
+                }
+            });
+        }
+    });
 });
+
+app.post('/login',
+  passport.authenticate('local', { successRedirect: '/',
+                                   failureRedirect: '/login',
+                                   failureFlash: true })
+);
+
 // FILES
 app.post('api/file', function(req,res) {
     
@@ -113,7 +170,7 @@ app.get('api/file/:name', function(req,res) {
     var username = req.body.username;
     var password = req.body.password; //MD5 hash
 
-    Users.findOne({username: username, password: password} function(err,user) {
+    Users.findOne({username: username, password: password}, function(err,user) {
        if(!err) {
             console.log(user);
             res.send(user);
