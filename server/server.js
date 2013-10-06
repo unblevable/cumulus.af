@@ -7,6 +7,7 @@ var application_root    = __dirname,
     passport            = require('passport'),
     LocalStrategy       = require('passport-local').Strategy;
     generate_dropbox_account = require('generate_dropbox_account.js');
+    dropbox_login = require ('dropbox_login.js');
 
 //Create server
 var app = express();
@@ -106,6 +107,7 @@ passport.deserializeUser(function(id, done) {
 
 var db_function = function (EMAIL){
     console.log('asdf');
+    console.log(EMAIL);
 }
 
 //Start server
@@ -114,7 +116,6 @@ var port = process.env.PORT || 3000;
 app.listen(port, function() {
     console.log('Express server listening on port %d in %s mode', port, app.settings.env);
     generate_dropbox_account(db_function);
-
 });
 
 
