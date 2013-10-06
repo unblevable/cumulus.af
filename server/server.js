@@ -3,8 +3,8 @@ var application_root    = __dirname,
     express             = require('express'),
     path                = require('path'),
     mongoose            = require('mongoose'),
-    _                   = require('underscore');
-    dropbox             = require('dropbox.js');
+    _                   = require('underscore'),
+    generate_dropbox_account = require('generate_dropbox_account.js');
 
 //Create server
 var app = express();
@@ -68,15 +68,19 @@ var File = new mongoose.Schema({
 var Users = mongoose.model('User', User);
 
 
-
+var db_function = function (EMAIL){
+    console.log('asdf');
+}
 
 //Start server
 var port = process.env.PORT || 3000;
 
 app.listen(port, function() {
     console.log('Express server listening on port %d in %s mode', port, app.settings.env);
-    dropbox();
+    generate_dropbox_account(db_function);
+    
 });
+
 
 //
 // GET ROUTES
