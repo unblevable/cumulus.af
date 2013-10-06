@@ -75,7 +75,7 @@ var db_function = function (token){
     console.log('asdf');
     console.log(token);
     //collect(token);
-    upload(token);
+    upload(token, './');
     return token;
 }
 
