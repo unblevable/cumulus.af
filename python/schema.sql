@@ -11,6 +11,7 @@ create table accounts (
 
 create table files (
 	name text not null,
+	uploaded_at timestamp not null,
 	account integer not null,
 
 	foreign key(account) references accounts(id)

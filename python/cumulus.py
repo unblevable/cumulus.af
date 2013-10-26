@@ -6,7 +6,8 @@
 
 """
 import sqlite3
-from flask import Flask, request, session, url_for, render_template, _app_ctx_stack
+from flask import Flask, request, session, g, redirect, url_for, abort, \
+    render_template, flash, _app_ctx_stack
 
 # Configuration
 DB = 'db/cumulus.db'
@@ -30,16 +31,17 @@ def get_db():
 @app.route("/")
 def files():
 	db = get_db()
-	cur = db.execute('select * from files order by happened_at desc')
+	cur = db.execute('select * from files order by uploaded_at desc')
 	files = cur.fetchall()
 	return_vals = {
 		'files': files,
 		'title': 'Cumulus.af',
-		'total_space'
+		'used_space': '500G',
+		'aggregated_space': '10.58G',
 	}
 	return render_template('files.html', return_vals=return_vals)
 
-@app.route("/add", methods['POST'])
+@app.route("/add", methods=['POST'])
 def add_file():
 	# db = get_db()
 	return redirect(url_for('files'));
