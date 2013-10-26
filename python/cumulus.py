@@ -8,7 +8,7 @@
 import sqlite3
 from flask import Flask, request, session, g, redirect, url_for, abort, \
     render_template, flash, _app_ctx_stack
-
+from lib import registerAccount, getDownloadURL
 # Configuration
 DB = 'db/cumulus.db'
 DEBUG = True
@@ -33,11 +33,14 @@ def files():
 	db = get_db()
 	cur = db.execute('select * from files order by uploaded_at desc')
 	files = cur.fetchall()
+	cur = db.execute('select * from accounts')
+	accounts = cur.fetchall()
+	aggregated_space = len(accounts) * 2
 	return_vals = {
 		'files': files,
 		'title': 'Cumulus.af',
 		'used_space': '500',
-		'aggregated_space': '10.58',
+		'aggregated_space': aggregated_space,
 	}
 	return render_template('files.html', return_vals=return_vals)
 
