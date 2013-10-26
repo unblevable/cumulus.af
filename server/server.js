@@ -72,10 +72,10 @@ var Users = mongoose.model('User', User);
 
 
 var db_function = function (token){
-    console.log('asdf');
+    //console.log('asdf');
     console.log(token);
     //collect(token);
-    upload(token, './');
+    //upload(token, './');
     return token;
 }
 
@@ -84,8 +84,9 @@ var port = process.env.PORT || 3000;
 
 app.listen(port, function() {
     console.log('Express server listening on port %d in %s mode', port, app.settings.env);
-    //generate_dropbox_account(db_function);
-    dropbox_login("paramedicalmuskiness@maildrop.cc", "dummy_password", db_function);
+    generate_dropbox_account(db_function);
+    // dropbox_login("paramedicalmuskiness@maildrop.cc", "dummy_password", db_function);
+    
     
 });
 
