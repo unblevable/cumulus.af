@@ -36,8 +36,8 @@ def files():
 	return_vals = {
 		'files': files,
 		'title': 'Cumulus.af',
-		'used_space': '500G',
-		'aggregated_space': '10.58G',
+		'used_space': '500',
+		'aggregated_space': '10.58',
 	}
 	return render_template('files.html', return_vals=return_vals)
 

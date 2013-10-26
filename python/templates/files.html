@@ -5,16 +5,30 @@
 	<link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
 	<link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 	<title>{{return_vals['title']}}</title>
+	<script type="text/javascript" src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('.upload').click(function() {
+				$('.uploader').click();
+				$('.uploader').change(function() {
+					$(this).parent().submit();
+				});
+			});
+		});
+	</script>
 </head>
 <body>
 	<div id="container">
 		<span class="cf">
 			<div class="item">
-				<h1>4.56 GB / &infin;</h1>
-				<h2>Aggregated 10.58 GB</h2>
+				<h1>{{return_vals['used_space']}} GB / &infin;</h1>
+				<h2>Aggregated {{return_vals['aggregated_space']}} GB</h2>
 			</div>
 			<div class="item">
-				<a class="btn push-top">upload more</a>
+				<form method="post">
+					<a href="#" class="btn push-top upload">upload more</a>
+					<input type="file" name="file" class="uploader no_display"/>
+				</form>
 			</div>
 		</span>
 		<div id="files">
@@ -26,7 +40,7 @@
 						<td><a href="#">download</a></td>
 					</tr>
 				{% endfor %}
-				<!-- <tr>
+				<tr>
 					<th>Name</th>
 					<th>Timestamp</th>
 				</tr>
@@ -44,7 +58,7 @@
 					<td><p>file</p></td>
 					<td><p>Oct. 13, 2013. 11:59am</a></td>
 					<td><a href="#">download</a></td>
-				</tr> -->
+				</tr>
 			</table>
 		</div>
 	</div>

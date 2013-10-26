@@ -98,6 +98,9 @@ a, input[type=submit] {
       color: #f9fcf7;
       background: #535cc6; }
 
+.no_display {
+  display: none; }
+
 i {
   color: #75d1ab;
   font-size: 300px; }
