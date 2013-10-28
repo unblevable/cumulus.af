@@ -8,7 +8,7 @@
 import sqlite3
 from flask import Flask, request, session, g, redirect, url_for, abort, \
     render_template, flash, _app_ctx_stack
-from lib import registerAccount, getDownloadURL
+from lib import registerAccount, getDownloadURL, uploadFile
 # Configuration
 DB = 'db/cumulus.db'
 DEBUG = True

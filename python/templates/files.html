@@ -6,7 +6,7 @@
 	<link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 	<title>{{return_vals['title']}}</title>
 	<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
-	<script type="text/javascript" src="{{ url_for('static', filename='js/cumulus.js') }}"	</script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/cumulus.js') }}"></script>
 </head>
 <body>
 	<div id="container">
@@ -27,6 +27,7 @@
 				{% for file in return_vals['files'] %}
 					<tr>
 						<th>{{file['name'] }}</th>
+						<th>{{File['account'] }}</th>
 						<th>{{file['uploaded_at']}}</th>
 						<td><a href="#">download</a></td>
 					</tr>

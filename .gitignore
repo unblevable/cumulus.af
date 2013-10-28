@@ -1,6 +1,7 @@
 *.swp
 *.swo
 *.png
+*.pyc
 junk/
 .DS_STORE
 *.DS_Store

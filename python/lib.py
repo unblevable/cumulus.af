@@ -1,4 +1,4 @@
-# from ghost import Ghost
+from ghost import Ghost
 
 #### HACKISH ####
 
@@ -17,10 +17,10 @@ def registerAccount():
 
 #### API RELATED ####
 
-def getDownloadURL(file):
+def getDownloadURL(file, account, password):
 	"""Returns a URL for the valid download 
 
-	that the user should be redirected to
+	that the user should be redirected to, requires A & P
 
 	"""
 
